@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <script type="text/javascript" src="jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="jqueryEx.js"></script>
+	<script type="text/javascript" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<script type="text/javascript" src="videojs.js"></script> 
+    
+
+  <body style="height:360px;width: 490px;overflow-y:hidden;overflow-x:hidden;margin: 0px;">
+   	<div class="view-content ng-scope" ng-controller="stoneStorageCtrl">
+    <div class="box-title"></div>
+    <div class="headtitle"><img src="/QTJFCNew/Images/myimg/line-light.png"><h3>备石点</h3>
+        <span class="box-words" style="display:block;float:right;line-height:25px;">防汛物资 &gt; 备石点</span>
+    </div>
+    <div class="search-content-01">
+        <div class="input-group  input-group-sm">
+            <span class="input-group-addon" style="width:80px;height:34px;margin-left:5px;margin-top:5px;line-height:22px;">
+                所属单位
+            </span>
+            <select class="form-control ng-pristine ng-valid" style="width:170px;height:34px;margin-top:5px;" ng-model="searchText.name">
+                <option value="" selected="">全部</option>
+                <option value="杭州管理处">杭州管理处</option>
+                <option value="嘉兴管理处">嘉兴管理处</option>
+                <option value="宁绍管理处">宁绍管理处</option>
+                <option value="应急中心">应急中心</option>
+            </select>
+            <span class="input-group-addon" style="width:80px;height:34px;margin-top:5px;line-height:22px;margin-left:-1px;">
+                储备点名称
+            </span>
+            <input ng-model="storageText.name" class="form-control ng-pristine ng-valid" style="width:170px;height:34px;margin-top:5px;margin-left:-1px;">
+            <div class="input-group-btn">
+                <span class="btn btn-warning input-title" style="margin-top:5px;height:34px;" ng-click="query()">查询</span>
+            </div>
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="fixed-table-header" style="padding-right: 17px;">
+        <table class="table table-bordered ctltable" style="table-layout: fixed;margin-bottom:0;">
+            <tbody><tr style="background-color:#afe3f8;">
+                <th rowspan="2" class="text-center" style="width:20%;">所属单位</th>
+                <th rowspan="2" class="text-center" style="width:10%;">储备点</th>
+                <th colspan="2" class="text-center" style="width:20%;">储备数量（m<sup>3</sup>）</th>
+                <th class="text-center" style="width:10%;">2%/年</th>
+                <th colspan="2" class="text-center" style="width:20%;">现有储备数量（m<sup>3</sup>）</th>
+                <th colspan="2" class="text-center" style="width:10%;">定额储备数量（m<sup>3</sup>）</th>
+                <th rowspan="2" class="text-center" style="width:10%;">储备时间<br>（年）</th>
+            </tr>
+
+            <tr style="background-color:#afe3f8;">
+                <th class="text-center" style="width:10%;">块石</th>
+                <th class="text-center" style="width:10%;">砂石料</th>
+                <th class="text-center" style="width:10%;">耗损率</th>
+                <th class="text-center" style="width:10%;">块石</th>
+                <th class="text-center" style="width:10%;">砂石料</th>
+                <th class="text-center" style="width:10%;">块石</th>
+                <th class="text-center" style="width:10%;">砂石料</th>
+            </tr>
+        </tbody></table>
+            </div>
+        <div class="tbody-fixed-09" style="height:100%;">
+                <table class="table table-bordered" style="TABLE-LAYOUT: fixed">
+                    <tbody><!-- ngRepeat: org in data|filter:searchText --><tr ng-repeat-start="org in data|filter:searchText" class="ng-scope">
+                        <td style="width:10%;" rowspan="4" class="ng-binding">杭州管理处</td>
+                        <td style="width:10%;" class="ng-binding">闻堰备石点</td>
+                        <td style="width:10%;" class="ng-binding">10169</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding">2</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding">61028</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                    </tr>
+                    <!-- ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">七格备石点</td>
+                        <td class="ng-binding">3605</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">32614</td>
+                        <td class="ng-binding"></td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">1#盘头护塘地备石点</td>
+                        <td class="ng-binding">5122</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">9101</td>
+                        <td class="ng-binding"></td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">九号坝备石点</td>
+                        <td class="ng-binding">5689</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">9101</td>
+                        <td class="ng-binding"></td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) -->
+                    <tr ng-repeat-end="" class="ng-scope"></tr><!-- end ngRepeat: org in data|filter:searchText --><tr ng-repeat-start="org in data|filter:searchText" class="ng-scope">
+                        <td style="width:10%;" rowspan="4" class="ng-binding">嘉兴管理处</td>
+                        <td style="width:10%;" class="ng-binding">海宁八堡备石点</td>
+                        <td style="width:10%;" class="ng-binding">5084</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding">2</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding">52494</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                    </tr>
+                    <!-- ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">海宁大缺口备石点</td>
+                        <td class="ng-binding">12673</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">29233</td>
+                        <td class="ng-binding"></td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">海盐落塘抢险码头备石点</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">1318</td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2000</td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">海盐黄家埝备石点</td>
+                        <td class="ng-binding">17250</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">47999</td>
+                        <td class="ng-binding"></td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) -->
+                    <tr ng-repeat-end="" class="ng-scope"></tr><!-- end ngRepeat: org in data|filter:searchText --><tr ng-repeat-start="org in data|filter:searchText" class="ng-scope">
+                        <td style="width:10%;" rowspan="4" class="ng-binding">宁绍管理处</td>
+                        <td style="width:10%;" class="ng-binding">上虞七四丘</td>
+                        <td style="width:10%;" class="ng-binding">16026</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding">2</td>
+                        <td style="width:10%;" class="ng-binding">12821</td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding"></td>
+                        <td style="width:10%;" class="ng-binding">3078</td>
+                        <td style="width:10%;" class="ng-binding">2005</td>
+                    </tr>
+                    <!-- ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">上虞海涂一号闸下游</td>
+                        <td class="ng-binding">3600</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding">3168</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">3627</td>
+                        <td class="ng-binding">2009</td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">余姚燕子窝</td>
+                        <td class="ng-binding">7145</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding">5573</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2004</td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) --><tr ng-repeat="storage in (org.storages|filter:storageText).slice(1)" class="ng-scope">
+                        <td class="ng-binding">杭州湾新区西线垃圾场</td>
+                        <td class="ng-binding">9996</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2</td>
+                        <td class="ng-binding">8197</td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding">2006</td>
+                    </tr><!-- end ngRepeat: storage in (org.storages|filter:storageText).slice(1) -->
+                    <tr ng-repeat-end="" class="ng-scope"></tr><!-- end ngRepeat: org in data|filter:searchText -->
+                </tbody></table>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

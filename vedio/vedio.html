@@ -1,0 +1,41 @@
+<div class="panel panel-vedio">
+	<div class="panel-heading">
+	<!-- <div>
+		<a href="http://www2.htwater.net/Video/HkPlugin/ChromeWebVideoControlSetup.zip" target="_blank" style="cursor: pointer; padding-left: 5px;" title="视频插件下载1">镇海、杭州湾下载地址<img style="height:16px;width:16px;" alt="" src="modules/vedio/icons/download1.png"></a>
+		<a href="http://www2.htwater.net/Video/Plugin/VideoPluginSetup20170531.exe" target="_blank" style="cursor: pointer; padding-left: 5px;" title="视频插件下载2">其他县区下载地址<img style="height:16px;width:16px;" alt="" src="modules/vedio/icons/download1.png"></a>
+	</div> -->
+	<table>
+		<tr>
+			<td><div class="panel-title"><%=name%></div></td>
+			<td>&nbsp;&nbsp;<a href="http://www2.htwater.net/Video/HkPlugin/ChromeWebVideoControlSetup.zip" target="_blank" style="cursor: pointer; padding-left: 5px;" title="视频插件下载1">镇海、杭州湾<img style="height:16px;width:16px;" alt="" src="modules/vedio/icons/download1.png"></a></td>
+			<td>&nbsp;&nbsp;<a href="http://www2.htwater.net/Video/Plugin/VideoPluginSetup20170531.exe" target="_blank" style="cursor: pointer; padding-left: 5px;" title="视频插件下载2">其他县区<img style="height:16px;width:16px;" alt="" src="modules/vedio/icons/download1.png"></a></td>
+		</tr>
+	</table>
+	</div>	
+	<div class="panel-actionbar filter-bar">
+		<form class="form-inline" role="form">
+			<div class="form-group">
+				<label for="county" class="control-label">清晰程度：</label>
+				<select id='pixelselect' class="input-sm form-control" style="width: 180px;">
+					<option value ="不限">不限</option>
+					<option value =0>高清</option>
+					<option value ="1">非高清</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="county" class="control-label">设备类型：</label>
+				<select id='typeselect' class="input-sm form-control" style="width: 180px;">
+					<option value ="不限">不限</option>
+					<option value ="0">枪机</option>
+					<option value ="1">球机</option>
+				</select>
+			</div>
+		</form>
+	</div>
+	<div class="panel-body">
+		<div class="tree-wrapper">
+			<ul id="vedio-tree" class="ztree"></ul>
+		</div>
+		
+	</div>
+</div>

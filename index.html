@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8"> 
+   <title id="mytitle">姚江大闸</title>
+   <script src="./jquery-1.11.1.min.js"></script>
+   <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">  
+   <script src="./bootstrap/js/bootstrap.min.js"></script> 
+   
+	<link rel="stylesheet" href="./bootstrap-table2/bootstrap-table.min.css">  
+	<script src="./bootstrap-table2/bootstrap-table.min.js"></script>
+	<script src="./echart/echarts.min.js"></script>
+	<script src="./jqEx/jsEx.js"></script>
+		<script src="./basic.js"></script>
+	
+	<style>
+		/*当浏览器尺寸小于1679px时候的代码：*/
+	@media screen and (max-width:1679px){
+			.paddingClass {
+				padding: 2px;
+				font-size: 8px;
+				line-height: 1.2;
+			}
+			td {
+				font-size: 8px;
+				padding: 1px !important;
+				line-height: 1!important;
+			}
+			.h2 {
+				font-weight: bold;
+				display: inline-block;
+				font-size: 14px;
+				margin: 0;
+				margin: 0;
+				line-height: 1.5;
+				height: 20px;
+				margin-left: 18px;
+				margin-top: 0px;
+			}
+			.myclass {
+				font-size:8px;
+			}
+			img {    height: 14px;}
+			hr {
+				margin-top:0px;
+				margin-bottom:0px;
+			}
+			.titleCard {
+				margin-bottom:0px;
+			}
+			
+	}
+	
+
+	
+	
+	/*当浏览器尺寸大于1679px时候的代码：*/
+	@media screen and (min-width:1679px){
+			.paddingClass {
+				padding: 7px;
+			}
+			.h2 {
+				font-weight: bold;
+				display: inline-block;
+				font-size: 14px;
+				margin: 0;
+				margin: 0;
+				line-height: 1.5;
+				height: 30px;
+				margin-left: 18px;
+				margin-top: 15px;
+			}
+			.myclass {
+				font-size:14px;
+			}
+			img {    height: 28px;}
+			hr {
+				margin-top:15px;
+				margin-bottom:15px;
+			}
+			.titleCard {
+				margin-bottom:10px;
+			}
+	}
+	
+	
+	
+	/*原先代码 begin*/
+
+	
+
+	html {height:100%}
+
+	body {height:100%;background-color:#efecec}
+
+	.h3 {
+		font-weight: bold;
+		display: inline-block;
+		font-size: 18px;
+		margin: 0;
+		margin: 0;
+		line-height: 1.5;
+		height: 30px;
+	}
+
+
+	td {border:none;}
+
+	.numClass {
+		color: #40aee4;;
+		font-weight: bold;
+	}
+	
+	.kdnum {
+	 text-align: center;color: blue;font-weight: bold;
+	}
+	.kdnumred {
+	 text-align: center;color: red;font-weight: bold;
+	}
+	
+	.kdname{
+	text-align: center;font-weight: bold;
+	}
+	
+	.jzdiv{
+		width:calc(10% - 2.4px);height:calc(16.6% - 5px);float:left;background-color:white
+	}
+	
+	/*.paddingClass {
+		padding: 7px;
+	}*/
+	
+	.tdclass {
+		    border:4px solid #255b6f;
+			background-color: white;
+		
+	}
+	
+	.openclass {
+		background-color: #1de81d;
+	}
+	
+	.control-span {
+		color:#b5afaf;
+		font-size:8px;
+	}
+	
+	.modal-dialog {
+		width: 900px;
+		margin: 30px auto 30px;
+	}
+	
+	
+		/*已经用js代码控制自适应
+	.zbDiv {
+		width:95px !important;
+	}
+	.zbDivImg {
+		width:95px !important;
+	}
+	.zbDivCotent{
+		width:84px !important;
+	}
+	
+	.zbDivCotent2{
+	    width: 84px !important;
+		margin-top: 10px !important;
+		margin-left: 5px !important;
+	}
+	
+	.tableDiv{
+		width:84px !important;
+	}
+	*/
+	
+	/*原先代码 end*/
+	
+	</style>
+	<script>
+	$(function(){
+		var rescd = $.getUrlVars("rescd");
+		var gcInfo = basic.filter(function(v){
+			return v.ENNMCD == rescd;
+		})
+				
+	
+		//
+		var shipin = [
+		//姚江
+		{rescd:"330205000026",text:"检修通道",code:"4877"},
+		{rescd:"330205000026",text:"西区下游",code:"4878"},
+		{rescd:"330205000026",text:"西区上游",code:"4879"},
+		{rescd:"330205000026",text:"东区上游",code:"4880"},	
+		//大嵩		
+		{rescd:"330212000075",text:"顺风桥",code:"3117"},
+		{rescd:"330212000075",text:"横山码头外海",code:"3118"},
+		{rescd:"330212000075",text:"金鸡碶上游",code:"3119"},
+		{rescd:"330212000075",text:"潘家碶下游",code:"3120"},
+		{rescd:"330212000075",text:"金鸡碶下游",code:"3121"},
+		{rescd:"330212000075",text:"潘家碶上游",code:"3123"},
+		{rescd:"330212000075",text:"横山码头内河",code:"3125"},
+		{rescd:"330212000075",text:"龙尾闸上游",code:"3509"},
+		{rescd:"330212000075",text:"龙尾闸下游",code:"3510"},
+		//孔浦
+		{rescd:"330205000021",text:"二楼过道",code:"3259"},	
+		{rescd:"330205000021",text:"闸室1",code:"3260"},	
+		{rescd:"330205000021",text:"闸室2",code:"3261"},
+		{rescd:"330205000021",text:"闸外通道",code:"3262"},	
+		{rescd:"330205000021",text:"二楼泵房",code:"3263"},					
+		{rescd:"330205000021",text:"内河侧",code:"3264"},		
+		{rescd:"330205000021",text:"外江侧",code:"3265"},	
+		{rescd:"330205000021",text:"二楼启闭室",code:"3266"},	
+		//慈江
+		{rescd:"330205000039",text:"泵站主厂房",code:"3927"},
+		{rescd:"330205000039",text:"闸站下游",code:"3928"},
+		{rescd:"330205000039",text:"泵站进水池",code:"3929"},
+		{rescd:"330205000039",text:"水闸启闭机下层",code:"3930"},
+		{rescd:"330205000039",text:"水闸下游",code:"3931"},
+		{rescd:"330205000039",text:"水闸启闭机上层",code:"3932"},
+		{rescd:"330205000039",text:"配电室",code:"3933"},
+		{rescd:"330205000039",text:"泵房启闭机上层",code:"3934"},
+		{rescd:"330205000039",text:"泵房启闭机下层",code:"3935"},
+		{rescd:"330205000039",text:"支援闸启闭室上层",code:"3936"},
+		{rescd:"330205000039",text:"支援闸启闭室下层",code:"3937"},
+		{rescd:"330205000039",text:"支援闸上游",code:"3938"},
+		{rescd:"330205000039",text:"支援闸下游",code:"3939"},	
+		{rescd:"330205000039",text:"水闸上游",code:"3940"},		
+		{rescd:"330205000039",text:"1号水泵",code:"3941"},
+		{rescd:"330205000039",text:"2号水泵",code:"3942"},	
+		{rescd:"330205000039",text:"3号水泵",code:"3943"},	
+		{rescd:"330205000039",text:"管理房入口",code:"3944"},
+		{rescd:"330205000039",text:"中控室",code:"3945"},	
+		{rescd:"330205000039",text:"4号水泵",code:"3946"},
+		//化子闸
+		{rescd:"330205000029",text:"下游东",code:"5561"},
+		{rescd:"330205000029",text:"方家河侧",code:"5560"},
+		{rescd:"330205000029",text:"庄桥河侧",code:"5566"},
+		{rescd:"330205000029",text:"1号泵组",code:"5567"},
+		{rescd:"330205000029",text:"2号泵组",code:"5563"},
+		{rescd:"330205000029",text:"3号泵组",code:"5565"},
+		{rescd:"330205000029",text:"4号泵组",code:"5564"},
+		]
+		var filterData = shipin.filter(function(v){
+		
+			return v.rescd == rescd;
+		})
+		
+		for(var i=0;i<filterData.length;i++){
+			$("#myselect").append('<option value="'+filterData[i].code+'">'+filterData[i].text+'</option>');
+		}
+		
+		if(filterData.length > 0) {
+				$("#myframe").append('<iframe src="./vedio/sp/onlyplay.html?code='+filterData[0].code+'" height="100%" width="100%" style="border: none;"/>')
+		}
+
+		
+		
+		
+		
+		
+		var gcname = gcInfo[0].ENNM;
+	
+		var bm = gcInfo[0].ENNMCD;
+		var xzqdm = gcInfo[0].CITYCD;
+		var ssqy = gcInfo[0].CITY;
+		var xz = gcInfo[0].TOWN;
+		var zksl = gcInfo[0].HOLE_CNT;
+		var gmlx = gcInfo[0].GRADE == "Ⅱ"?"大型水闸":"中型水闸";
+		var sjll = gcInfo[0].GATE_Q;
+		var dj = gcInfo[0].LGTD;
+		var bw = gcInfo[0].LATD;
+		var szhl = gcInfo[0].RVNM;
+	
+		var gcjb = gcInfo[0].GRADE;
+		var zyjzwjb = gcInfo[0].BUILD_GRADE;
+		var jzz = gcInfo[0].GATETP;
+		var zt = gcInfo[0].STATUS;
+		var sjbz = gcInfo[0].GATE_STAN;
+		
+		$("#gcname").html(gcname);
+		$("#mytitle").html(gcname);
+		$("#bm").html(bm);
+		$("#xzqdm").html(xzqdm);
+		$("#ssqy").html(ssqy);
+		$("#xz").html(xz);
+		$("#zksl").html(zksl); //闸孔数量
+		$("#gmlx").html(gmlx);
+		$("#sjll").html(sjll);	
+		$("#dj").html(dj);
+		$("#bw").html(bw);	
+		$("#szhl").html(szhl);
+		
+		$("#gcjb").html(gcjb);
+		$("#zyjzwjb").html(zyjzwjb);	
+		$("#jzz").html(jzz);
+		$("#zt").html(zt);	
+		$("#sjbz").html(sjbz);	
+		
+		
+		$('#mainjpg').attr("src", "./img/"+rescd+"_2.jpg");
+		$('#leftpic').attr("src", "./img/"+rescd+".jpg");
+		
+
+		function getData(){
+			var tm1 = new Date().addDay(-6).format("yyyy-MM-dd");
+			var tm2 = new Date().addDay(1).format("yyyy-MM-dd");
+			
+			var a = zksl >= 6?6:zksl;
+		
+		
+		
+			for(var i=0;i<a;i++) {
+				var str = '<div style="display:table-cell;	height:100%;vertical-align:middle;overflow: hidden;">'+
+							'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;">'+
+								'<tbody>'+
+									'<tr>'+
+										'<td>'+
+											 '<div style="height: 92px;width: 162px;" class="zbDiv">'+
+												'<img src="img/zmchao1.png" style="position: absolute;height:92px;" class="zbDivImg">'+
+												'<div style="height: 73px;width: 144px;background: #45a4e0;margin-left: 8px;float: left;margin-top: 18px;" class="zbDivCotent"></div>'+
+												'<div class="zdiv zbDivCotent2" style="vertical-align: middle; height: 73px; width: 144px; float: left; background: url(&quot;img/zmzhadao1.png&quot;); margin-left: 9px; position: absolute; margin-top: 18px;" >'+
+													'<table class="tableDiv" style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 144px;height: 73px;">'+
+														'<tbody>'+
+															'<tr>'+
+																'<td>'+
+																	'<b>'+(i+1)+'#闸</b>'+
+																'</td>'+
+															'</tr>'+
+														'</tbody>'+
+													'</table>'+
+												'</div>'+
+											'</div>'+
+										'</td>'+
+								  '</tr>'+
+								  '<tr>'+
+										'<td>'+
+											'<div style="height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+												'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+														'<tbody>'+
+															'<tr>'+
+																'<td>'+
+																	'<b style="font-family: simhei;"><span id="miantm'+(i+1)+'"></span></b>'+
+																'</td>'+
+															'</tr>'+
+														'</tbody>'+
+												'</table>'+
+											'</div>'+
+										'</td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td>'+
+											'<div style="height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+												'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+													'<tbody>'+
+														'<tr>'+
+															'<td>'+
+																'<b style="font-family: simhei;"><span id="miankd'+(i+1)+'"></span>m</b>'+
+															'</td>'+
+														'</tr>'+
+													'</tbody>'+
+												'</table>'+
+											'</div>'+
+										'</td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td>'+
+											'<div style="height: 35px;border: 1px solid #cdcccc;">'+
+												'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+														'<tbody>'+
+															'<tr>'+
+																'<td>'+
+																	'<b style="font-family: simhei;"><span id="mianll'+(i+1)+'"></span>m³/s</b>'+
+																'</td>'+
+															'</tr>'+
+													'</tbody>'+
+												'</table>'+
+											'</div>'+
+										'</td>'+
+									'</tr>'+				
+								'</tbody>'+
+							'</table>'+
+						'</div>'
+				$("#divGate").append(str);
+			} 
+			
+					
+	
+			
+			//alert(parseInt($("#divGate").width()/8));
+			var width = parseInt($("#divGate").width()/8);
+			$(".zbDiv").css("width",width+11);
+			$(".zbDivImg").css("width",width+11);
+			$(".zbDivCotent").css("width",width);
+			$(".zbDivCotent2").css({"width":width,"margin-top":"10px","margin-left":"5px"});
+			$(".tableDiv").css("width",width);
+			
+			
+			var width = parseInt($("#divGate").width()/20);
+			$(".zbDiv_all").css("width",width+11);
+			$(".zbDivImg_all").css("width",width+11);
+			$(".zbDivCotent_all").css("width",width);
+			$(".zbDivCotent2_all").css({"width":width+3,"margin-top":"10px","margin-left":"5px"});
+			$(".tableDiv_all").css("width",width);
+	
+				var  modelwidth =  (width+11)*12+130;
+				$(".modal-dialog").css("width",modelwidth);
+	
+		
+			/*$.ajax({
+				type: 'get',
+				url: 'http://htwater.net:8090/abzh/Queryrian_day_line_noLogin!SYQ',
+				data: {
+					TM1: tm1+' 08:00',
+					TM2: tm2+' 08:00',
+					stcd: '7915'
+				},
+				dataType: 'jsonp',
+				success: function (data) {
+					 var xAxis = [],barData = [];
+					 $(data).each(function (i, v) {
+						xAxis.push(new Date(v.TM).format("M.dd"));
+						barData.push(v.VALUE);
+						if(new Date(v.TM).format("M.dd") == new Date().format("M.dd")) {
+							$("#jryl").html(v.VALUE);
+						}
+						drawData(xAxis,barData);
+					 });
+				}
+			});*/
+			var array = {
+				/*姚江大闸
+				大嵩江大闸 T
+				孔浦闸
+				慈江大闸
+				化子闸
+				保丰碶闸
+				跃进闸
+				小西坝闸
+				洋市中心闸
+				*/
+				"330205000026":"0102.0015.00",
+				"330212000075":"0105.0027.00",
+				"330205000021":"0102.0026.00",
+				"330205000039":"0102.0022.00",
+				"330205000029":"0102.0023.00",
+				"330205000022":"0101.0054.00",
+				"330282000026":"0102.0015.00",//无
+				"330205000074":"0102.0015.00",//无
+				"330205000012":"0102.0015.00",//无
+			}
+			
+			 $.ajax({
+				url: 'https://api.nbzhsl.cn/sys5/syq/queryDailyQ',
+				//url: 'http://192.168.18.42:8085/syq/queryDailyQ',
+				data: {
+					startTime: tm1,
+					endTime: tm2,
+					//stcds: '0102.0015.00'
+					stcds: array[rescd]
+				},
+				headers: {
+					'uuid': 1
+				},
+				dataType: 'json',
+				success: function (data) {
+					var data = data.results;
+					
+					 var xAxis = [],barData = [];
+					 $(data).each(function (i, v) {
+						xAxis.push(new Date(v.Time).format("M.dd"));
+						barData.push(v.Qvalue);
+						if(new Date(v.Time).format("M.dd") == new Date().format("M.dd")) {
+							$("#jryl").html(v.Qvalue);
+						}
+						drawData(xAxis,barData);
+					 });
+				},
+				error: function (xhr, textStatus, errorThrown) {
+				
+		　　　　} 
+			});
+		
+		}
+		function drawData(xAxis,barData){
+				var chartDom = document.getElementById('main');
+				var myChart = echarts.init(chartDom);
+				var option;
+
+				option = {
+					xAxis: {
+						type: 'category',
+						data: xAxis
+					},
+					tooltip: {
+                        trigger:'item',
+					
+                    },
+					yAxis: {
+						name:'m³',
+						type: 'value'
+					},
+					color:["#40aee4"],
+					series: [{
+						data: barData,
+						type: 'bar',
+						showBackground: true,
+						backgroundStyle: {
+							color: 'rgba(220, 220, 220, 0.8)'
+						}
+					}]
+				};
+				
+				option && myChart.setOption(option);
+		}
+		getData(); //逐日排水量
+	
+	
+	
+	
+		function getData2(){
+			var tm1 = new Date().addDay(-1).format("yyyy-MM-dd");
+			var tm2 = new Date().format("yyyy-MM-dd");
+		
+			var array = {
+				/*姚江大闸
+				大嵩江大闸 T
+				孔浦闸
+				慈江大闸
+				化子闸
+				保丰碶闸
+				跃进闸
+				小西坝闸
+				洋市中心闸
+				*/
+				"330205000026":"1103",
+				"330212000075":"",//无
+				"330205000021":"5",
+				"330205000039":"1302",
+				"330205000029":"27",
+				"330205000022":"1",
+				"330282000026":"",//无
+				"330205000074":"",//无
+				"330205000012":"",//无
+			
+			
+			};
+			
+			
+			$.ajax({
+				type: 'get',
+				url: 'http://htwater.net:8090/abzh/Queryzmgq_line_noLogin!GQ',
+				data: {
+					TM1: tm1+' 00:00',
+					TM2: tm2+' 23:59',
+					ZMID: array[rescd]
+				},
+				dataType: 'jsonp',
+				success: function (data) {
+				
+					data = data.filter(function(v){
+						return new Date(v.TM).format("hh:mm") == "00:00" || new Date(v.TM).format("hh:mm") == "06:00" || new Date(v.TM).format("hh:mm") == "12:00" || new Date(v.TM).format("hh:mm") == "18:00";
+					})
+					
+					 var xAxis = [],ll = [],zs=[],zx=[];
+					 $(data).each(function (i, v) {
+						if(new Date(v.TM).format("hh:mm") == "00:00") {
+							v.TM = new Date(v.TM).format("M.dd");
+						} else {
+							v.TM = new Date(v.TM).format("hh:mm");
+						}
+						xAxis.push(v.TM);
+						ll.push(v.LL);
+						zs.push(v.ZQSW);
+						zx.push(v.ZHSW);
+						drawData2(xAxis,ll,zs,zx);
+					 })
+					
+					drawData2(xAxis,ll,zs,zx);
+				
+				}
+			});
+		
+		}
+		function drawData2(xAxis,ll,zs,zx){
+				var chartDom2 = document.getElementById('main2');
+				var myChart2 = echarts.init(chartDom2);
+				var option2;
+			
+				option2 = {
+				
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['流量', '闸下水位', '闸上水位'],
+						bottom:'bottom'
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+					color:["orange","#40aee4","blue"],
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: xAxis
+					},
+					yAxis: {
+						name:'mm',
+						type: 'value'
+					},
+					series: [
+						{
+							name: '流量',
+							type: 'line',
+						
+							smooth: true,
+							data: ll
+						},
+						{
+							name: '闸下水位',
+							type: 'line',
+						
+							 smooth: true,
+							data: zx
+						},
+						{
+							name: '闸上水位',
+							type: 'line',
+						
+							 smooth: true,
+							data: zs
+						}
+					
+					]
+				};
+				
+				option2 && myChart2.setOption(option2);
+		
+		}
+		getData2(); //水位流量信息
+
+
+	
+		function getKdAndLl(){ //闸门开度和流量
+			var tm = new Date().format("yyyy-MM-dd hh:mm");
+			var tm2 = new Date().format("hh:mm");
+			$.ajax({
+				type: 'get',
+				url: 'http://htwater.net:8090/abzh/Queryzmgqforzhsl!GQ',
+				data: {
+					tm:tm,
+					region:'象山县'
+				},
+				/*url: 'http://monitor.nbzhsl.cn/api/gq/realtimeGate',
+				data: {
+					tm:'2021-06-20%2016:29'
+				},*/
+				dataType: 'jsonp',
+				success: function (data) {
+					console.log(data);
+				
+					data = data.filter(function(v){
+						return v.SPID == rescd;
+					})
+					var KDs = data[0].KDs.split(",");
+					var LLs = data[0].LLs.split(",");
+			
+					
+					var k = 0;
+					var ys = 0
+					if(zksl > 12) {
+						k = parseInt(zksl / 12);
+						ys = zksl % 12;
+						var html = "";
+						for(var m = 0;m<k;m++){
+							html += '<tr>';
+							for(var i=m*12;i<12*(m+1);i++){
+								if(KDs[i] > 0) {
+									html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass openclass" ></td>';
+								} else {
+									html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass"></td>';	
+								}
+							}
+							html+='</tr>';
+						}
+						if(ys != 0) {
+							html += '<tr>';
+							for(var i=12*k;i<12*k+ys;i++){
+									if(KDs[i] > 0) {
+										html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass openclass" ></td>';
+									} else {
+										html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass"></td>';	
+									}
+							}
+							html+='</tr>';
+						}
+			
+						
+					} else {
+						var html = '<tr>';
+						for(var i=0;i<zksl;i++){
+							if(KDs[i] > 0) {
+								html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass openclass" ></td>';
+							} else {
+								html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass"></td>';	
+							}
+						}
+						html+='</tr>';
+					
+					}
+					/*	var html = '<tr>';
+					for(var i=0;i<12;i++){
+						if(KDs[i] > 0) {
+							html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass openclass" ></td>';
+						} else {
+							html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass"></td>';	
+						}
+					}
+					html+='</tr>';
+					html+='<tr>';
+					for(var i=12;i<24;i++){
+						if(KDs[i] > 0) {
+							html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass openclass" ></td>';
+						} else {
+							html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass"></td>';	
+						}
+					}
+					 html+='</tr>'; 
+					 html+='<tr>';
+					for(var i=24;i<35;i++){
+						if(KDs[i] > 0) {
+							html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass openclass" ></td>';
+						} else {
+							html+='<td title="'+(i+1)+'#" width="20px" height="10px" class="tdclass"></td>';	
+						}
+					}
+					 html+='</tr>';   */
+					 $("#xieyitd").append(html);
+					 
+					  $("#miantm1").html(tm2);
+					 $("#miantm2").html(tm2);
+					 $("#miantm3").html(tm2);
+					 $("#miantm4").html(tm2);
+					 $("#miantm5").html(tm2);
+					 $("#miantm6").html(tm2);
+					 
+					 
+					 $("#miankd1").html(KDs[0]);
+					 $("#miankd2").html(KDs[1]);
+					 $("#miankd3").html(KDs[2]);
+					 $("#miankd4").html(KDs[3]);
+					 $("#miankd5").html(KDs[4]);
+					 $("#miankd6").html(KDs[5]);
+					 
+					 $("#mianll1").html(LLs[0]);
+					 $("#mianll2").html(LLs[1]);
+					 $("#mianll3").html(LLs[2]);
+					 $("#mianll4").html(LLs[3]);
+					 $("#mianll5").html(LLs[4]);
+					 $("#mianll6").html(LLs[5]);
+					 
+					 
+					 
+					 
+					 	
+					var kk = 0;
+					var ysys = 0
+					
+					if(zksl > 12) {
+						kk = parseInt(zksl / 12);
+						ysys = zksl % 12;
+						var html = "";
+						for(var m = 0;m<kk;m++){
+							if(m > 0) {
+								var html = $("#allDetail").children().eq(0).prop("outerHTML");
+								$("#allDetail").append("<hr>"+html);
+							}
+							for(var i=m*12;i<12*(m+1);i++){
+									var str = '<div style="display:table-cell;	height:100%;vertical-align:middle;overflow: hidden;">'+
+											'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;">'+
+												'<tbody>'+
+													'<tr>'+
+														'<td>'+
+															 '<div style="height: 92px;width: 162px;" class="zbDiv_all">'+
+																'<img src="img/zmchao1.png" style="position: absolute;height:92px;" class="zbDivImg_all">'+
+																'<div style="height: 73px;width: 144px;background: #45a4e0;margin-left: 8px;float: left;margin-top: 18px;" class="zbDivCotent_all"></div>'+
+																'<div class="zdiv zbDivCotent2_all" style="vertical-align: middle; height: 73px; width: 144px; float: left; background: url(&quot;img/zmzhadao1.png&quot;); margin-left: 9px; position: absolute; margin-top: 18px;" >'+
+																	'<table class="tableDiv_all" style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 144px;height: 73px;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b>'+(i+1)+'#闸</b>'+
+																				'</td>'+
+																			'</tr>'+
+																		'</tbody>'+
+																	'</table>'+
+																'</div>'+
+															'</div>'+
+														'</td>'+
+												  '</tr>';
+												 	if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b style="font-family: simhei;">'+tm2+'</b>'+
+																				'</td>'+
+																			'</tr>'+
+																		'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>';
+														if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 50px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																	'<tbody>'+
+																		'<tr>'+
+																			'<td>'+
+																				'<b style="font-family: simhei;">'+KDs[i]+'</b>'+
+																			'</td>'+
+																		'</tr>'+
+																	'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>';
+													if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 50px;border: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b style="font-family: simhei;">'+LLs[i]+'</b>'+
+																				'</td>'+
+																			'</tr>'+
+																	'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>'+				
+												'</tbody>'+
+											'</table>'+
+										'</div>'
+								$("#allDetail").append(str);
+							}
+						
+						}
+						if(ysys != 0) {
+							var html = $("#allDetail").children().eq(0).prop("outerHTML");
+							$("#allDetail").append("<hr>"+html);
+							for(var i=12*kk;i<12*kk+ysys;i++){
+										var str = '<div style="display:table-cell;	height:100%;vertical-align:middle;overflow: hidden;">'+
+											'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;">'+
+												'<tbody>'+
+													'<tr>'+
+														'<td>'+
+															 '<div style="height: 92px;width: 162px;" class="zbDiv_all">'+
+																'<img src="img/zmchao1.png" style="position: absolute;height:92px;" class="zbDivImg_all">'+
+																'<div style="height: 73px;width: 144px;background: #45a4e0;margin-left: 8px;float: left;margin-top: 18px;" class="zbDivCotent_all"></div>'+
+																'<div class="zdiv zbDivCotent2_all" style="vertical-align: middle; height: 73px; width: 144px; float: left; background: url(&quot;img/zmzhadao1.png&quot;); margin-left: 9px; position: absolute; margin-top: 18px;" >'+
+																	'<table class="tableDiv_all" style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 144px;height: 73px;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b>'+(i+1)+'#闸</b>'+
+																				'</td>'+
+																			'</tr>'+
+																		'</tbody>'+
+																	'</table>'+
+																'</div>'+
+															'</div>'+
+														'</td>'+
+												  '</tr>';
+												 	if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b style="font-family: simhei;">'+tm2+'</b>'+
+																				'</td>'+
+																			'</tr>'+
+																		'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>';
+														if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 50px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																	'<tbody>'+
+																		'<tr>'+
+																			'<td>'+
+																				'<b style="font-family: simhei;">'+KDs[i]+'</b>'+
+																			'</td>'+
+																		'</tr>'+
+																	'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>';
+													if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 50px;border: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b style="font-family: simhei;">'+LLs[i]+'</b>'+
+																				'</td>'+
+																			'</tr>'+
+																	'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>'+				
+												'</tbody>'+
+											'</table>'+
+										'</div>'
+								$("#allDetail").append(str);
+							}
+							
+						}
+			
+						
+					} else {
+						
+						for(var i=0;i<zksl;i++){
+								var str = '<div style="display:table-cell;	height:100%;vertical-align:middle;overflow: hidden;">'+
+											'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;">'+
+												'<tbody>'+
+													'<tr>'+
+														'<td>'+
+															 '<div style="height: 92px;width: 162px;" class="zbDiv_all">'+
+																'<img src="img/zmchao1.png" style="position: absolute;height:92px;" class="zbDivImg_all">'+
+																'<div style="height: 73px;width: 144px;background: #45a4e0;margin-left: 8px;float: left;margin-top: 18px;" class="zbDivCotent_all"></div>'+
+																'<div class="zdiv zbDivCotent2_all" style="vertical-align: middle; height: 73px; width: 144px; float: left; background: url(&quot;img/zmzhadao1.png&quot;); margin-left: 9px; position: absolute; margin-top: 18px;" >'+
+																	'<table class="tableDiv_all" style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 144px;height: 73px;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b>'+(i+1)+'#闸</b>'+
+																				'</td>'+
+																			'</tr>'+
+																		'</tbody>'+
+																	'</table>'+
+																'</div>'+
+															'</div>'+
+														'</td>'+
+												  '</tr>';
+												 	if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b style="font-family: simhei;">'+tm2+'</b>'+
+																				'</td>'+
+																			'</tr>'+
+																		'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>';
+														if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 50px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																	'<tbody>'+
+																		'<tr>'+
+																			'<td>'+
+																				'<b style="font-family: simhei;">'+KDs[i]+'</b>'+
+																			'</td>'+
+																		'</tr>'+
+																	'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>';
+													if(KDs[i] >0) {
+													str+='<tr style="background-color:#1de81d">';
+													} else {
+													str+='<tr>';
+													}
+													
+														str+='<td>'+
+															'<div style="height: 50px;border: 1px solid #cdcccc;">'+
+																'<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">'+
+																		'<tbody>'+
+																			'<tr>'+
+																				'<td>'+
+																					'<b style="font-family: simhei;">'+LLs[i]+'</b>'+
+																				'</td>'+
+																			'</tr>'+
+																	'</tbody>'+
+																'</table>'+
+															'</div>'+
+														'</td>'+
+													'</tr>'+				
+												'</tbody>'+
+											'</table>'+
+										'</div>'
+								$("#allDetail").append(str);
+						}
+						
+					
+					}
+					
+					
+					
+					  
+					
+					
+							
+										var width = parseInt($("#divGate").width()/8);
+										$(".zbDiv").css("width",width+11);
+										$(".zbDivImg").css("width",width+11);
+										$(".zbDivCotent").css("width",width);
+										$(".zbDivCotent2").css({"width":width,"margin-top":"10px","margin-left":"5px"});
+										$(".tableDiv").css("width",width);
+										
+										
+										var width = parseInt($("#divGate").width()/20);
+										$(".zbDiv_all").css("width",width+11);
+										$(".zbDivImg_all").css("width",width+11);
+										$(".zbDivCotent_all").css("width",width);
+										$(".zbDivCotent2_all").css({"width":width+3,"margin-top":"10px","margin-left":"5px"});
+										$(".tableDiv_all").css("width",width);
+								
+											var  modelwidth =  (width+11)*12+130;
+											$(".modal-dialog").css("width",modelwidth);
+					
+				}
+			});
+		
+		}
+		getKdAndLl();
+		
+		
+		
+		
+		
+			
+		$("#button0").click(function(){
+				$("#myframe").empty()
+				$("#myframe").append('<iframe src="./vedio/sp/onlyplay.html?code=4877" height="100%" width="100%" style="border: none;"/>')
+		})
+		
+		$("#button1").click(function(){
+				$("#myframe").empty()
+				$("#myframe").append('<iframe src="./vedio/sp/onlyplay.html?code=4878" height="100%" width="100%" style="border: none;"/>')
+		})
+		
+		$("#button2").click(function(){
+				$("#myframe").empty()
+				$("#myframe").append('<iframe src="./vedio/sp/onlyplaysz2.html" height="100%" width="100%" style="border: none;"/>')
+		})
+		
+		$("#button3").click(function(){
+				$("#myframe").empty()
+				$("#myframe").append('<iframe src="./vedio/sp/onlyplaysz3.html" height="100%" width="100%" style="border: none;"/>')
+		})
+		
+		$("#GD").click(function(){
+			window.open("http://sw.nbzhsl.cn/#/?url=flowWaterProcess&stcd=0102.0015.00");
+		})
+		
+		  $("#myselect").change(function(){
+				$("#myframe").empty()
+				$("#myframe").append('<iframe src="./vedio/sp/onlyplay.html?code='+$(this).val()+'" height="100%" width="100%" style="border: none;"/>')
+			});
+		
+		var CURRENT = new Date().format("yyyy-MM-dd");
+		$("#currentTIME").html(CURRENT);
+		
+		
+		//相关责任人
+		var xgfzr = [
+		{rescd:"330205000026",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330212000075",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330205000021",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330205000039",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330205000029",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330205000022",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330282000026",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330205000074",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		{rescd:"330205000012",zgbm:"市水利局",fzr:"董敏",jsfzr:"王吉勇",},
+		
+		]
+		var formatxgfzr  = xgfzr.filter(function(v){
+			return v.rescd == rescd;
+		})
+		$("#zgbm").html(formatxgfzr[0].zgbm);
+		$("#fzr").html(formatxgfzr[0].fzr);
+		$("#jsfzr").html(formatxgfzr[0].jsfzr);
+		
+
+	});
+	
+	var gateGrid = null;
+	initTable();
+	function initTable() {
+$('#table').bootstrapTable({
+  columns: [{
+    field: 'id',
+    title: 'Item ID'
+  }, {
+    field: 'name',
+    title: 'Item Name'
+  }, {
+    field: 'price',
+    title: 'Item Price'
+  }],
+  data: [{
+    id: 1,
+    name: 'Item 1',
+    price: '$1'
+  }, {
+    id: 2,
+    name: 'Item 2',
+    price: '$2'
+  }]
+})
+	}
+	
+	</script>
+
+</head>
+
+<body>
+
+<div style="height:50px;background-color:black;">
+	<div style="width: 200px;float:left;color: white;font-size: 17px;padding-top: 12px;padding-left: 18px;"><span>闸门泵站信息展示</span></div>
+	<div style="width: 122px;float:right;color: white;font-size: 17px;padding-top: 12px;padding-left: 18px;"><span id="currentTIME">2021-05-28</span></div>
+</div>
+<div style="height:calc( 100% - 70px);margin:10px">
+	<div style="height:100%;width:calc(20% - 10px);margin-right:10px;float:left">
+			<div class="panel panel-default" style="height:100%">
+			
+				<div class="panel-heading">
+					<h3 class="panel-title" style="font-weight:bold;" id="gcname">姚江大闸</h3>
+				</div>
+				<div class="panel-body" style="height:calc(100% - 38px)">
+					<div style="width:100%;height:30%">
+						
+					
+						<img id="leftpic" style="width:100%;height:100%" src="./img/330205000026.jpg" />
+					</div>
+					<div style="width:100%;height:70%;padding-top:10px;">
+						<div style="height: 65;">
+							<label class="h2">基本信息</label>
+							<table class='table table-border-none'>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>编码：</span>
+										<span id='bm' class="numClass">330205000026</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>行政区代码：</span>
+										<span id='xzqdm' class="numClass">330205</span>
+									</td>
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>所属区县：</span>
+										<span id='ssqx'>江北区</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>乡镇：</span>
+										<span id='xz'>甬江街道</span>
+									</td>
+								
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>闸孔数量(孔)：</span>
+										<span id='zksl' class="numClass">36</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>规模类型：</span>
+										<span id='gmlx'>	大型水闸</span>
+									</td>
+					
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>设计流量(m³/s)：</span>
+										<span id='sjll' class="numClass">	1043</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>东经：</span>
+										<span id='dj' class="numClass">	121°32′27.5″</span>
+									</td>
+						
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>北纬：</span>
+										<span id='bw' class="numClass">	29°54′1″</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>所在河流：</span>
+										<span id='szhh'>姚江</span>
+									</td>
+							
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>工程级别：</span>
+										<span id='gcjb'>II</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>主要建筑物级别：</span>
+										<span id='zyjzwjb'>2级</span>
+									</td>
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>节制闸：</span>
+										<span id='jzz'>挡潮闸</span>
+									</td>
+									<td style="border:none">
+										<span class='control-span'>状态:</span>
+										<span id='zt'>已建</span>
+									</td>
+								</tr>
+								<tr>
+									<td style="border:none">
+										<span class='control-span'>设计标准(年)：</span>
+										<span id='sjbz'>50</span>
+									</td>
+									
+								</tr>
+							</table>
+						</div>
+						<div style="height: 35%;" class="myclass">
+							<div class='col-sm-12'>
+								<div class="row titleCard" >
+									<div class='col-sm-12'>
+										<span class="spanTitle" style="font-weight:bold;">相关负责人</span>
+									</div>
+								</div>
+								<div class='row'>
+									<div class="col-xs-6 col-sm-8 response" >
+										<img src="./img/user.png">
+										<span>主管部门</span> 
+									</div>
+									<div class="col-xs-6 col-sm-4" >
+										<div class="row">
+											<div class = "col-xs-12 col-sm-12">
+												<span class='spanName' id="zgbm">市水利局</span>
+											</div>
+										</div>
+										<!--<div class="row">
+											<div class = "col-xs-12 col-sm-12">
+												<span class='spanPost'>副市长</span>
+											</div>
+										</div>-->
+									</div>
+									<hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color="#6f5499" size="3" />
+								</div>
+								<div class='row'>
+									<div class="col-xs-6 col-sm-8 response" >
+										<img src="./img/user.png">
+										<span>单位负责人</span> 
+									</div>
+									<div class="col-xs-6 col-sm-4" >
+										<div class="row">
+											<div class = "col-xs-12 col-sm-12">
+												<span class='spanName' id="fzr">董敏</span>
+											</div>
+										</div>
+									
+									</div>
+									<hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color="#6f5499" size="3" />
+								</div>
+								<div class='row'>
+									<div class="col-xs-6 col-sm-8 response" >
+										<img src="./img/user.png">
+										<span>技术负责人</span> 
+									</div>
+									<div class="col-xs-6 col-sm-4" >
+										<div class="row">
+											<div class = "col-xs-12 col-sm-12">
+												<span class='spanName' id="jsfzr">王吉勇</span>
+											</div>
+										</div>
+									
+									</div>
+									<hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color="#6f5499" size="3" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	<div style="height:100%;width:calc(50% - 10px);margin-right:10px;float:left">
+		<div style="height:60%;margin-bottom:10px;">
+			<div class="panel panel-default" style="height:100%">
+				<div class="panel-heading">
+					<h3 class="panel-title" style="font-weight:bold;">闸泵信息</h3>
+				</div>
+				<div class="panel-body" style="height:calc(100% - 38px)">
+						<div style="width:100%;height:100%"><img id="mainjpg" style="width:100%;height:100%" src="./img/330205000026_2.jpg"/></div>
+				
+				<table border="1" style="position:absolute;top: 54%;left: 50%;margin-left: -261px;border:none" id="xieyitd">
+					  <!--<tr >
+						<td title="1#" width="20px" height="10px" class="tdclass openclass" ></td>
+						<td title="2#" width="20px" height="10px" class="tdclass"></td>
+						<td title="3#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="4#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="5#" width="20px" height="10px" class="tdclass"></td>
+						<td title="6#" width="20px" height="10px" class="tdclass"></td>
+						<td title="7#" width="20px" height="10px" class="tdclass"></td>
+						<td title="8#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="9#" width="20px" height="10px" class="tdclass"></td>
+						<td title="10#" width="20px" height="10px" class="tdclass"></td>
+						<td title="11#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="12#"  width="20px" height="10px" class="tdclass"></td>
+					  </tr>
+					  <tr>
+						<td title="13#"  width="20px" height="10px" class="tdclass"></td>
+						<td title="14#" width="20px" height="10px" class="tdclass"></td>
+						<td title="15#" width="20px" height="10px" class="tdclass"></td>
+						<td title="16#" width="20px" height="10px" class="tdclass"></td>
+						<td title="17#" width="20px" height="10px" class="tdclass"></td>
+						<td title="18#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="19#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="20#" width="20px" height="10px" class="tdclass"></td>
+						<td title="21#" width="20px" height="10px" class="tdclass"></td>
+						<td title="22#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="23#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="24#" width="20px" height="10px" class="tdclass"></td>
+				
+					  </tr>
+					  <tr>
+						<td title="25#"  width="20px" height="10px" class="tdclass"></td>
+						<td title="26#"  width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="27#" width="20px" height="10px" class="tdclass"></td>
+						<td title="28#" width="20px" height="10px" class="tdclass"></td>
+						<td title="29#" width="20px" height="10px" class="tdclass"></td>
+						<td title="30#" width="20px" height="10px" class="tdclass"></td>
+						<td title="31#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="32#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="33#" width="20px" height="10px" class="tdclass"></td>
+						<td title="34#" width="20px" height="10px" class="tdclass"></td>
+						<td title="35#" width="20px" height="10px" class="tdclass openclass"></td>
+						<td title="36#" width="20px" height="10px" class="tdclass openclass"></td>
+						
+					  </tr>-->
+					</table>
+				
+				</div>
+			</div>
+			
+		</div>
+		<div style="height:calc(40% - 10px);">
+			<div id="divContentCenter" align="center" class="content content_bg" style="position: relative; height: 157px; visibility: visible;"> 
+				<div id="divGate" class="table" align="left">
+					<div style="display:table-cell;	height:100%;vertical-align:middle;overflow: hidden;">
+						
+						 <!-- 按钮触发模态框 -->
+							<button type="button" class="btn btn-link" style="position: absolute; top: 20px;" data-toggle="modal" data-target="#myModal">更多>></button>
+							<!-- 模态框（Modal） -->
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+												&times;
+											</button>
+											<h4 class="modal-title" id="myModalLabel">
+											 	详情
+											</h4>
+										</div>
+										<div class="modal-body" id="allDetail">
+												<div style="display:table-cell;	height:100%;vertical-align:middle;overflow: hidden;" id="ntgtnk">
+													<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;">
+														<tbody>
+														<tr>
+															<td>
+																<div style="height: 92px;width: 80px; ">
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<div style="background:#eaeaea;height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">
+																	<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">
+																			<tbody><tr>
+																				<td style="width: 40px;">
+																					<b style="font-family: simhei;">开启时间：</b>
+																				</td>
+																			</tr>
+																	</tbody></table>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<div style="background:#eaeaea;height: 50px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">
+																	<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">
+																			<tbody><tr>
+																				<td>
+																					<b style="font-family: simhei;">当前开度(m)：</b>
+																				</td>
+																			</tr>
+																	</tbody></table>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<div style="height: 50px;border: 1px solid #cdcccc;">
+																	<table style="background:#eaeaea;padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">
+																			<tbody><tr>
+																				<td>
+																					<b style="font-family: simhei;">当前流量(m³/s)：</b>
+																				</td>
+																			</tr>
+																	</tbody></table>
+																</div>
+															</td>
+														</tr>					
+													</tbody>
+												</table>
+											</DIV>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							
+						<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;">
+							<tbody>
+							<tr>
+								<td>
+									<div style="height: 92px;width: 80px; ">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div style="background:#eaeaea;height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">
+										<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">
+												<tbody><tr>
+													<td style="width: 40px;">
+														<b style="font-family: simhei;">开启时间：</b>
+													</td>
+												</tr>
+										</tbody></table>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div style="background:#eaeaea;height: 35px;margin-bottom: -2px;border-left: 1px solid #cdcccc;border-right: 1px solid #cdcccc;border-top: 1px solid #cdcccc;">
+										<table style="padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">
+												<tbody><tr>
+													<td>
+														<b style="font-family: simhei;">当前开度：</b>
+													</td>
+												</tr>
+										</tbody></table>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div style="height: 35px;border: 1px solid #cdcccc;">
+										<table style="background:#eaeaea;padding: 0px;border-collapse: inherit;border-spacing: 0px;text-align: center;width: 100%;height: 100%;">
+												<tbody><tr>
+													<td>
+														<b style="font-family: simhei;">当前流量：</b>
+													</td>
+												</tr>
+										</tbody></table>
+									</div>
+								</td>
+							</tr>					
+						</tbody>
+						</table>
+					</div>
+			
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="height:100%;width:30%;float:left">
+		<div style="height:calc(34% - 5px);margin-bottom:5px;">
+			<div class="panel panel-default" style="height:100%">
+				<div class="panel-heading">
+					<h3 class="panel-title" style="font-weight:bold;">视频监控   
+						<!--<span>
+							<a href="http://www2.htwater.net/Video/HkPlugin/ChromeWebVideoControlSetup.zip" target="_blank" style="cursor: pointer; padding-left: 5px;" title="视频插件下载1">视频插件下载1
+							</a>
+						</span>
+						<span>
+							<a href="http://www2.htwater.net/Video/Plugin/VideoPluginSetup20170531.exe" target="_blank" style="cursor: pointer; padding-left: 5px;" title="视频插件下载1">视频插件下载2
+							</a>
+						</span>-->
+						<span style="float:right" id="sp">
+							<select id="myselect">
+							</select>
+							</span>
+					</h3>
+				
+				</div>
+				<div class="panel-body" style="height:calc(100% - 38px);padding: 5px;"  >
+						<!--<DIV style="width:20%;float:left">
+						
+								<button type="button" class="btn btn-primary btn-xs"  id="button0">检修通道</button>
+								<button style="margin-top:1x;"  type="button" class="btn btn-primary btn-xs"  id="button1">西区下游</button>
+								<button style="margin-top:1px;"  type="button" class="btn btn-primary btn-xs"  id="button2">西区上游</button>
+								<button  style="margin-top:1px;" type="button" class="btn btn-primary btn-xs"  id="button3">东区上游</button>
+					
+							
+							
+						</DIV>-->
+						<DIV style="width:100%;float:left;height:100%;" id="myframe"></DIV>
+				</div>
+			</div>
+			
+		</div>
+		<div style="height:calc(34% - 5px);margin-bottom:5px; position: relative;">
+			<div class="panel panel-default" style="height:100%">
+				<div class="panel-heading">
+					<h3 class="panel-title" style="font-weight:bold;">逐日排水量</h3>
+				</div>
+				<div class="panel-body" style="height:calc(100% - 38px)">
+					<div id="main" style="height:100%;width:100%;"></div>
+				</div>
+			</div>
+			<div style="position:absolute;top: 59px; right: 59px;font-weight:bold;">今日排水量:<span style="font-size: 18px;" id="jryl">0</span>m³</div>
+		</div>
+		<div style="height:32%;">
+			<div class="panel panel-default" style="height:100%">
+				<div class="panel-heading">
+					<h3 class="panel-title" style="font-weight:bold;">水位流量信息<span ID="GD" style="float:right"><a>更多&gt;&gt;</a></span></h3>
+				</div>
+				<div class="panel-body" style="height:calc(100% - 38px)">
+						<div id="main2" style="height:100%;width:100%;"></div>
+				</div>
+			</div>
+		</div> 
+	</div>
+</div>
+</body>
+
+</html>

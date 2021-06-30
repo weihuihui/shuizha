@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<title>视频预览</title>
+<!-- 以下为通用脚本 -->
+<script src="jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="jqueryEx.js"></script>
+<script type="text/javascript" src="onlypreview.js"></script>
+<style type="text/css">
+	body{
+	  margin: 0px;
+	}
+</style>
+</head>
+
+<body class="monitor">
+	<div class="win_container" data-index="1" id="preview_1"
+								style="width: 100%; height: 100%;" name="ocx_1"></div>
+	<!-- <div id="right-control">
+		监控点ID<input id="indexCode" type="text" />
+		<input type="button" onclick="realTimePlay($('#indexCode').val());" value="预览" /> <input
+			type="button" onMouseDown="ptzControllerMove(21,0)"
+			onMouseUp="ptzControllerMove(21,1)" value="上" /> <input
+			type="button" onMouseDown="ptzControllerMove(22,0)"
+			onMouseUp="ptzControllerMove(22,1)" value="下" /> <input
+			type="button" onMouseDown="ptzControllerMove(23,0)"
+			onMouseUp="ptzControllerMove(23,1)" value="左" /> <input
+			type="button" onMouseDown="ptzControllerMove(24,0)"
+			onMouseUp="ptzControllerMove(24,1)" value="右" /> <input
+			type="button" onMouseDown="ptzControllerMove(25,0)"
+			onMouseUp="ptzControllerMove(25,1)" value="左上" /> <input
+			type="button" onMouseDown="ptzControllerMove(26,0)"
+			onMouseUp="ptzControllerMove(26,1)" value="右上" /> <input
+			type="button" onMouseDown="ptzControllerMove(27,0)"
+			onMouseUp="ptzControllerMove(27,1)" value="左下" /> <input
+			type="button" onMouseDown="ptzControllerMove(28,0)"
+			onMouseUp="ptzControllerMove(28,1)" value="右下" /> <input
+			type="button" onMouseDown="ptzControllerMove(11,0)"
+			onMouseUp="ptzControllerMove(11,1)" value="焦距变大" /> <input
+			type="button" onMouseDown="ptzControllerMove(12,0)"
+			onMouseUp="ptzControllerMove(12,1)" value="焦距变小" />
+		<br/>
+		<button id="call-point">复位</button>
+		窗口设置<button onclick="selectWindowType(1);">1x1</button>
+		<button onclick="selectWindowType(2);">2x2</button>
+		<button onclick="selectWindowType(3);">3x3</button>
+		<button onclick="selectWindowType(4);">1大5小</button>
+		<button onclick="selectWindowType(5);">4x4</button>
+		<button onclick="selectWindowType(6);">1大12小</button>
+		<button onclick="stopAll();">关闭全部预览</button>
+		<button onclick="getOnlineState();">获取在线状态</button>
+		<button onclick="window.open('http://www2.htwater.net/Video/Plugin/VideoPluginSetup20160708.exe');">控件下载</button>
+	</div> -->
+	<!-- 以下为当前页脚本 -->
+	<script type="text/javascript" src="onlyplay.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		var caramelId = $.getUrlParam("code");
+		$.ajaxSetup({
+			timeout : 20000,
+			async: false
+		});
+		selectWindowType(1);
+		getPlayXML(caramelId);
+		
+	});
+	</script>
+</body>
+</html>
